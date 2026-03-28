@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  noarch: python
+  skip: true  # [not osx]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   entry_points:
     - delocate-addplat = delocate.cmd.delocate_addplat:main
