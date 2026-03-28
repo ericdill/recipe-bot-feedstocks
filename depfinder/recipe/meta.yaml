@@ -15,14 +15,13 @@ build:
 
 requirements:
   host:
-    - python >=2.7
+    - python >=3.13
     - pip
     - setuptools
   run:
-    - python >=2.7
+    - python >=3.13
     - pyyaml
     - requests
-    - stdlib-list
 
 test:
   imports:
