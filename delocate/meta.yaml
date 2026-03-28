@@ -1,0 +1,50 @@
+{% set name = "delocate" %}
+{% set version = "0.13.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a93e67a9f56ee01a3f7096a042231d4ac37fecac873cd5ea34ea2b4f43a8fa13
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  entry_points:
+    - delocate-addplat = delocate.cmd.delocate_addplat:main
+    - delocate-fuse = delocate.cmd.delocate_fuse:main
+    - delocate-listdeps = delocate.cmd.delocate_listdeps:main
+    - delocate-merge = delocate.cmd.delocate_merge:main
+    - delocate-patch = delocate.cmd.delocate_patch:main
+    - delocate-path = delocate.cmd.delocate_path:main
+    - delocate-wheel = delocate.cmd.delocate_wheel:main
+
+requirements:
+  host:
+    - python >=3.9
+    - pip
+    - setuptools >=61.0.0
+    - setuptools-scm >=6.2
+  run:
+    - python >=3.9
+    - packaging >=20.9
+    - typing_extensions >=4.12.2
+    - macholib
+
+test:
+  imports:
+    - delocate
+  commands:
+    - delocate-wheel --help
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/matthew-brett/delocate
+  summary: Move macOS dynamic libraries into package
+  license: BSD-2-Clause
+  license_file: LICENSE
