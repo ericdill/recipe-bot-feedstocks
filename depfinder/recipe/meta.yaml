@@ -1,0 +1,39 @@
+{% set name = "depfinder" %}
+{% set version = "2.10.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: cbaf7c10d53689df8d0893193ff0eaf728e0f541bd935c464d33c614dc662791
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python >=2.7
+    - pip
+    - setuptools
+  run:
+    - python >=2.7
+    - pyyaml
+    - requests
+    - stdlib-list
+
+test:
+  imports:
+    - depfinder
+  requires:
+    - pip
+  commands:
+    - pip check
+
+about:
+  home: http://github.com/ericdill/depfinder
+  summary: Find all the imports in your library
+  license: BSD-3-Clause
+  license_file: LICENSE
