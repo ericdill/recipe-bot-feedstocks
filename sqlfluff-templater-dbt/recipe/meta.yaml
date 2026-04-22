@@ -1,0 +1,45 @@
+{% set name = "sqlfluff-templater-dbt" %}
+{% set version = "4.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/4f/25/18cca913ab9be3961dfedc534eaedaeaaaaefdfa4e1542f26b85a9db7679/sqlfluff_templater_dbt-{{ version }}.tar.gz
+  sha256: 18699aac09901d758a21c8b56236ddb6b9668517f87dd29e7b0cd1e3f4782ea6
+
+build:
+  noarch: python
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -v
+
+requirements:
+  host:
+    - python
+    - pip
+    # build_backend_requires is null/unknown; defaulting to setuptools assumption
+    - setuptools
+  run:
+    - python
+    - sqlfluff ==4.1.0
+    - dbt-core >=1.4.1
+    - jinja2-simple-tags >=0.3.1
+
+test:
+  imports:
+    - sqlfluff_templater_dbt
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sqlfluff/sqlfluff
+  summary: Lint your dbt project SQL
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - conda-forge/sqlfluff
