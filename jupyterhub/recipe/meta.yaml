@@ -1,0 +1,67 @@
+{% set name = "jupyterhub" %}
+{% set version = "4.1.4" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/fd/8d/4cb96f66cec6aaa4247146444f66bc2d799e16e657b19eac60db701521d0/{{ name }}-{{ version }}.tar.gz
+  sha256: 773c82bfeed9a57daabda32579cf834d553827337600368320e822e73f6c92dd
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -v
+
+requirements:
+  host:
+    - python >=3.7
+    - pip
+    - setuptools
+  run:
+    - python >=3.7
+    - alembic >=1.4
+    - async-generator >=1.9
+    - certipy >=0.1.2
+    - jinja2 >=2.11.0
+    - jupyter-telemetry >=0.1.0
+    - oauthlib >=3.0
+    - packaging
+    - prometheus_client >=0.4.0
+    - python-dateutil
+    - requests
+    - sqlalchemy >=1.4
+    - tornado >=5.1
+    - traitlets >=4.3.2
+    - importlib-metadata >=3.6  # [py<310]
+    - pamela  # [not win]
+    - psutil >=5.6.5  # [win]
+
+test:
+  imports:
+    - jupyterhub
+    - jupyterhub.app
+    - jupyterhub.auth
+    - jupyterhub.handlers
+    - jupyterhub.spawner
+  requires:
+    - pip
+  commands:
+    - pip check
+
+about:
+  home: https://jupyter.org/hub
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE
+  summary: "JupyterHub: A multi-user server for Jupyter notebooks"
+  description: |
+    JupyterHub is a multi-user server that manages and proxies multiple instances
+    of the single-user Jupyter notebook server.
+  doc_url: https://jupyterhub.readthedocs.io/
+  dev_url: https://github.com/jupyterhub/jupyterhub
+
+extra:
+  recipe-maintainers:
+    - anaconda-packaging
