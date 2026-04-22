@@ -1,0 +1,58 @@
+{% set version = "0.0.0" %}
+
+package:
+  name: anaconda-opentelemetry
+  version: {{ version }}
+
+source:
+  url: https://github.com/anaconda/anaconda-otel-python/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: PLACEHOLDER_SHA256_FOR_VERSION_0.0.0
+
+build:
+  number: 0
+  skip: True  # [py<39]
+  script: pip install . --no-deps --no-build-isolation -vv
+
+requirements:
+  host:
+    - python
+    - pip
+    - setuptools >=61.0
+    - wheel
+  run:
+    - python
+    - anaconda-anon-usage
+    - pyyaml >=6.0.2
+    - opentelemetry-api ==1.38.0
+    - opentelemetry-exporter-otlp-proto-common ==1.38.0
+    - opentelemetry-exporter-otlp-proto-grpc ==1.38.0
+    - opentelemetry-exporter-otlp-proto-http ==1.38.0
+    - opentelemetry-proto ==1.38.0
+    - opentelemetry-sdk ==1.38.0
+    - opentelemetry-semantic-conventions ==0.59b0
+    - grpcio >=1.71.0
+
+test:
+  imports:
+    - anaconda_opentelemetry
+  source_files:
+    - tests/
+  requires:
+    - pip
+    - pytest
+    - flask
+    - conda
+  commands:
+    - pip check
+    - python -m pytest ./tests -k "not (test_metrics or test_logs)"
+
+about:
+  home: https://github.com/anaconda/anaconda-otel-python
+  summary: "An OpenTelemetry wrapper for Anaconda application telemetry"
+  description: |
+    Anaconda's OpenTelemetry Instrumentation Libraries
+  license: Apache-2.0
+  license_family: APACHE
+  license_file: LICENSE
+  dev_url: https://github.com/anaconda/anaconda-otel-python
+  doc_url: https://github.com/anaconda/anaconda-otel-python
