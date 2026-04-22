@@ -1,0 +1,62 @@
+{% set name = "cffi" %}
+
+{% set version = "1.17.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/fc/97/c783634659c2920c3fc70419e3af40972dbaf758daa229a7d6ea6135c90d/cffi-{{ version }}.tar.gz
+  sha256: 1c39c6016c32bc48dd54561950ebd6836e1670f2ae46128f67cf49e789c52824
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  build:
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - {{ compiler('c') }}
+  host:
+    - python
+    - pip
+    - setuptools >=66.1
+    - libffi  # [not win]
+    - pycparser
+  run:
+    - python
+    - libffi  # [not win]
+    - pycparser
+
+test:
+  imports:
+    - cffi
+    - _cffi_backend
+  requires:
+    - pip
+  commands:
+    - pip check
+    - python -X faulthandler -c "from cffi import FFI; print(FFI().dlopen('ucrtbase'))"  # [win]
+    - python -X faulthandler -c "from cffi import FFI; print(FFI().dlopen(None))"  # [not win]
+
+about:
+  home: https://github.com/python-cffi/cffi
+  license: MIT
+  license_file: LICENSE
+  summary: Foreign Function Interface for Python calling C code.
+  description: |
+    Cffi aims to allow users to call C code from Python without having to
+    learn a 3rd language. It provides a convenient and reliable way to call
+    compiled C code from Python using interface declarations written in C.
+  doc_url: https://cffi.readthedocs.io
+  dev_url: https://github.com/python-cffi/cffi
+
+extra:
+  recipe-maintainers:
+    - goanpeca
+    - ocefpaf
+    - katietz
+    - h-vetinari
+    - zklaus
