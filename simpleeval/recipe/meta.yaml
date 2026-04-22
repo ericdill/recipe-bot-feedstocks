@@ -1,0 +1,53 @@
+{% set name = "simpleeval" %}
+{% set version = "1.0.5" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b6b7933fffe13a345ada9917f8579c72e7b8afcfb7f7759b18fdd068aaa60486
+
+build:
+  number: 0
+  skip: True  # [py<39]
+  script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --no-deps
+
+requirements:
+  host:
+    - python
+    - pip
+    - hatchling
+  run:
+    - python
+
+test:
+  source_files:
+    - test_simpleeval.py
+  imports:
+    - simpleeval
+  commands:
+    - pip check
+    - pytest -vv test_simpleeval.py
+  requires:
+    - pip
+    - pytest
+
+about:
+  home: https://github.com/danthedeckie/simpleeval
+  license: MIT
+  license_family: MIT
+  license_file: LICENCE
+  summary: A simple, safe single expression evaluator library.
+  description: |
+    A quick single file library for easily adding evaluatable expressions
+    into python projects, or if you want to allow simple formulae in a
+    web application, but don't want to give full eval() access.
+  doc_url: https://github.com/danthedeckie/simpleeval/blob/master/README.rst
+  dev_url: https://github.com/danthedeckie/simpleeval
+
+extra:
+  recipe-maintainers:
+    - mtekman
+    - bgruening
