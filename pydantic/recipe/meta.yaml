@@ -1,0 +1,50 @@
+{% set name = "pydantic" %}
+{% set version = "2.11.7" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/00/dd/4325abf92c39ba8623b5af936ddb36ffcfe0beae70405d456ab1fb2f5b8c/{{ name }}-{{ version }}.tar.gz
+  sha256: d989c3c6cb79469287b1569f7447a17848c998458d49ebe294e975b9baf0f0db
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -q
+
+requirements:
+  host:
+    - python >=3.9
+    - pip
+    - hatchling
+    - hatch-fancy-pypi-readme >=22.5.0
+  run:
+    - python >=3.9
+    - annotated-types >=0.6.0
+    - pydantic-core ==2.33.2
+    - typing-extensions >=4.12.2
+    - typing-inspection >=0.4.0
+
+test:
+  imports:
+    - pydantic
+    - pydantic.v1
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://docs.pydantic.dev
+  summary: Data validation using Python type hints
+  license: MIT
+  license_file: LICENSE
+  dev_url: https://github.com/pydantic/pydantic
+
+extra:
+  recipe-maintainers:
+    - samuelcolvin
+    - dmontagu
+    - adriangb
