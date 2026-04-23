@@ -1,0 +1,54 @@
+{% set name = "pdfminer.six" %}
+{% set version = "20250506" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/78/46/5223d613ac4963e1f7c07b2660fe0e9e770102ec6bda8c038400113fb215/pdfminer_six-{{ version }}.tar.gz
+  sha256: b03cc8df09cf3c7aba8246deae52e0bca7ebb112a38895b5e1d4f5dd2b8ca2e7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - pip
+    - python >=3.9
+    - setuptools >=61.0
+    - setuptools-scm >=8
+  run:
+    - python >=3.9
+    - charset-normalizer >=2.0.0
+    - cryptography >=36.0.0
+
+test:
+  imports:
+    - pdfminer
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pdfminer/pdfminer.six
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: PDF parser and analyzer
+  description: |
+    Pdfminer.six is a community maintained fork of the original PDFMiner.
+    It is a tool for extracting information from PDF documents.
+    It focuses on getting and analyzing text data. Pdfminer.six extracts
+    the text from a page directly from the sourcecode of the PDF.
+    It can also be used to get the exact location, font or color of the text.
+  doc_url: https://pdfminersix.readthedocs.io
+  dev_url: https://github.com/pdfminer/pdfminer.six
+
+extra:
+  recipe-maintainers:
+    - pvanheus
+    - estshorter
