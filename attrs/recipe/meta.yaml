@@ -11,20 +11,19 @@ source:
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -q
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   host:
-    - python >=3.7
+    - python
     - pip
     - hatchling
     - hatch-vcs
     - hatch-fancy-pypi-readme >=23.2.0
   run:
-    - python >=3.7
-    # importlib-metadata required for python < 3.8
-    - importlib-metadata  # [py27 or py36]
+    - python
+    # importlib-metadata is only needed for python < 3.8
+    - importlib-metadata  # [py27 or py36 or py37]
 
 test:
   imports:
@@ -43,8 +42,8 @@ about:
   summary: Classes Without Boilerplate
   description: |
     attrs is the Python package that will bring back the joy of writing classes
-    by relieving you from the drudgery of implementing object protocols (aka
-    dunder methods).
+    by relieving you from the drudgery of implementing object protocols like
+    __init__, __eq__, or __repr__.
   doc_url: https://www.attrs.org/
   dev_url: https://github.com/python-attrs/attrs
 
