@@ -1,0 +1,48 @@
+{% set name = "tenacity" %}
+{% set version = "9.1.4" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/47/c6/ee486fd809e357697ee8a44d3d69222b344920433d3b6666ccd9b374630c/{{ name }}-{{ version }}.tar.gz
+  sha256: adb31d4c263f2bd041081ab33b498309a57c77f9acf2db65aadf0898179cf93a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -q
+
+requirements:
+  host:
+    - python >=3.10
+    - pip
+    - setuptools >=21.0.0
+    - setuptools-scm >=3.4
+  run:
+    - python >=3.10
+
+test:
+  imports:
+    - tenacity
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jd/tenacity
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE
+  summary: Retry code until it succeeds
+  description: |
+    Tenacity is a general-purpose retrying library, written in Python, to
+    simplify the task of adding retry behavior to just about anything.
+  doc_url: https://tenacity.readthedocs.io/
+  dev_url: https://github.com/jd/tenacity
+
+extra:
+  recipe-maintainers:
+    - anaconda-packaging
