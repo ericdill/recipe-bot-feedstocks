@@ -23,7 +23,6 @@ requirements:
   run:
     - python
     - click >=8
-    - conda >=25
     - conda-package-streaming >=0.12.0
     - filelock
     - jinja2
@@ -35,7 +34,6 @@ requirements:
 
 test:
   imports:
-    - conda_index
     - conda_index.index
   requires:
     - pip
