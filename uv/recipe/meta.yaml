@@ -1,0 +1,52 @@
+{% set name = "uv" %}
+{% set version = "0.4.30" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/8e/66/8191736201d0b503f75cc5682e5d1a47e0e4fe55f5616605af8727e2c9de/{{ name }}-{{ version }}.tar.gz
+  sha256: d9de718380e2f167243ca5e1dccea781e06404158442491255fec5955d57fed9
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -v
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - rust
+  host:
+    - python
+    - pip
+    - maturin >=1.0,<2.0
+  run:
+    - python
+
+test:
+  imports:
+    - uv
+  commands:
+    - pip check
+    - uv --version
+  requires:
+    - pip
+
+about:
+  home: https://github.com/astral-sh/uv
+  license: MIT OR Apache-2.0
+  license_file:
+    - LICENSE-MIT
+    - LICENSE-APACHE
+  summary: An extremely fast Python package and project manager, written in Rust.
+  description: |
+    uv is an extremely fast Python package and project manager, written in Rust.
+    It is designed as a drop-in replacement for pip and pip-tools workflows.
+  doc_url: https://docs.astral.sh/uv/
+  dev_url: https://github.com/astral-sh/uv
+
+extra:
+  recipe-maintainers:
+    - conda-forge/uv
