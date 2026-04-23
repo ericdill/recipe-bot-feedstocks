@@ -1,0 +1,57 @@
+{% set name = "crewai-tools" %}
+{% set version = "1.14.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/f7/58/420a5448bc606469637370b29390c75e064f916568c42cd5289500d35f82/crewai_tools-1.14.2.tar.gz
+  sha256: c2d7d2d6c90c142f6c79c06835e48d300a559e16f9b73eae8096fe5c00793c21
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -v
+
+requirements:
+  host:
+    - python >=3.10,<3.14
+    - pip
+    - hatchling
+  run:
+    - python >=3.10,<3.14
+    - beautifulsoup4 >=4.13.4
+    # crewai is NOT available on main or conda-forge; must be built separately
+    - crewai ==1.14.2
+    - pymupdf >=1.26.6
+    - python-docx >=1.2.0
+    # pytube is NOT on main; only on conda-forge — needs to be added to main
+    - pytube >=15.0.0
+    - requests >=2.33.0,<3
+    - tiktoken >=0.8.0
+    # youtube-transcript-api is NOT on main; only on conda-forge — needs to be added to main
+    - youtube-transcript-api >=1.2.2
+
+test:
+  imports:
+    - crewai_tools
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/crewai-tools/
+  summary: Set of tools for the crewAI framework
+  license: MIT
+  # NOTE: license identifier inferred; no license field returned from PyPI metadata
+  # license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - anaconda-recipes
+  # BLOCKERS:
+  # - crewai==1.14.2 is missing from both defaults/main and conda-forge; must be packaged first
+  # - pytube is only on conda-forge, not on defaults/main; must be added to main
+  # - youtube-transcript-api is only on conda-forge, not on defaults/main; must be added to main
