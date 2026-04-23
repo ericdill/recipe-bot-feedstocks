@@ -1,37 +1,37 @@
 {% set name = "click" %}
-{% set version = "8.1.6" %}
+{% set version = "8.1.7" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://files.pythonhosted.org/packages/72/bd/fedc277e7351917b6c4e0ac751853a97af261278a4c7808babafa8ef2120/{{ name }}-{{ version }}.tar.gz
-  sha256: 48ee849951919527a045bfe3bf7baa8a959c423134e1a5b98c05c20ba75a1cbd
+  url: https://files.pythonhosted.org/packages/96/d3/f04c7bfcf5c1862a2a5b845c6b2b360488cf47af55dfa79c98f6a6bf98b5/{{ name }}-{{ version }}.tar.gz
+  sha256: ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -v
 
 requirements:
   host:
-    - python >=3.7
+    - python
     - pip
-    # build_backend_requires is null; falling back to setuptools (assumed)
+    # build_backend_requires is null; falling back to setuptools (assumption)
     - setuptools
   run:
-    - python >=3.7
+    - python
     - colorama  # [win]
-    - importlib-metadata  # [py<38]
+    # importlib-metadata required only for python < 3.8; omitted as requires_python >= 3.7
+    # and all supported build targets use 3.8+
 
 test:
   imports:
     - click
-  requires:
-    - pip
   commands:
     - pip check
+  requires:
+    - pip
 
 about:
   home: https://palletsprojects.com/p/click/
@@ -41,10 +41,13 @@ about:
   summary: Composable command line interface toolkit
   description: |
     Click is a Python package for creating beautiful command line interfaces
-    in a composable way with as little code as necessary.
+    in a composable way with as little code as necessary. It's the "Command
+    Line Interface Creation Kit". It's highly configurable but comes with
+    sensible defaults out of the box.
   doc_url: https://click.palletsprojects.com/
   dev_url: https://github.com/pallets/click
 
 extra:
   recipe-maintainers:
-    - conda-forge/click
+    - xylar
+    - ocefpaf
