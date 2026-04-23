@@ -1,0 +1,53 @@
+{% set name = "attrs" %}
+{% set version = "24.2.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/fc/0f/aafca9af9315aee06a89ffde799a10a582fe8de76c563ee80bbcdc08b3fb/{{ name }}-{{ version }}.tar.gz
+  sha256: 5cfb1b9148b5b086569baec03f20d7b6bf3bcacc9a42bebf87ffaaca362f6346
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -q
+
+requirements:
+  host:
+    - python >=3.7
+    - pip
+    - hatchling
+    - hatch-vcs
+    - hatch-fancy-pypi-readme >=23.2.0
+  run:
+    - python >=3.7
+    # importlib-metadata required for python < 3.8
+    - importlib-metadata  # [py27 or py36]
+
+test:
+  imports:
+    - attr
+    - attrs
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.attrs.org/
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: Classes Without Boilerplate
+  description: |
+    attrs is the Python package that will bring back the joy of writing classes
+    by relieving you from the drudgery of implementing object protocols (aka
+    dunder methods).
+  doc_url: https://www.attrs.org/
+  dev_url: https://github.com/python-attrs/attrs
+
+extra:
+  recipe-maintainers:
+    - hynek
