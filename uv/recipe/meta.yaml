@@ -18,7 +18,6 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - rust
-    - cargo
   host:
     - python
     - pip
