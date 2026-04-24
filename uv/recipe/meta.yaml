@@ -18,6 +18,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - rust
+    - cmake
+    - make  # [not win]
   host:
     - python
     - pip
