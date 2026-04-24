@@ -17,7 +17,7 @@ requirements:
   host:
     - python
     - pip
-    # build_backend_requires is null/unknown; assuming setuptools as fallback
+    # build_backend_requires is null; falling back to setuptools assumption
     - setuptools
   run:
     - python
