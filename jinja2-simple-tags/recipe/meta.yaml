@@ -10,8 +10,7 @@ source:
   sha256: 54abf83883dcd13f8fd2ea2c42feeea8418df3640907bd5251dec5e25a6af0e3
 
 build:
-  # build_backend_requires is null; build system listed as unknown.
-  # Assuming setuptools as fallback given package structure.
+  # build_backend_requires is null; assuming setuptools as fallback
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
 
@@ -40,4 +39,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - rxm7706
+    - anaconda
