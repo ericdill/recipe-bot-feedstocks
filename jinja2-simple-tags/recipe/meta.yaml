@@ -1,0 +1,43 @@
+{% set name = "jinja2-simple-tags" %}
+{% set version = "0.6.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/d8/b7/a2c8a0c60e6f2cb0dbc5020b43df7b0dc9a8fae0767c2f72665a1c7b76c9/jinja2-simple-tags-{{ version }}.tar.gz
+  sha256: 54abf83883dcd13f8fd2ea2c42feeea8418df3640907bd5251dec5e25a6af0e3
+
+build:
+  # build_backend_requires is null; build system listed as unknown.
+  # Assuming setuptools as fallback given package structure.
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python
+    - pip
+    - setuptools
+  run:
+    - python >=3.6
+    - jinja2 >=2.10
+
+test:
+  imports:
+    - jinja2_simple_tags
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dldevinc/jinja2-simple-tags
+  summary: Base classes for quick-and-easy template tag development
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rxm7706
