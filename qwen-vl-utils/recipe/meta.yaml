@@ -1,0 +1,44 @@
+{% set name = "qwen-vl-utils" %}
+{% set version = "0.0.14" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/b6/b1/ad4fc2260a3badd278b38d642f3b987412f1f6682f0ef2b31b0572d5caa8/qwen_vl_utils-{{ version }}.tar.gz
+  sha256: 9c7cad5ae803b3a10f8bb7194deb12aeacdd032f92f4224e880c73587a7346ad
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -v
+
+requirements:
+  host:
+    - python
+    - pip
+    - hatchling
+  run:
+    - python
+    - av
+    - packaging
+    - pillow
+    - requests
+
+test:
+  imports:
+    - qwen_vl_utils
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/qwen-vl-utils/
+  license: Apache-2.0
+  license_file: LICENSE
+  summary: Qwen Vision Language Model Utils - PyTorch
+
+extra:
+  recipe-maintainers:
+    - anaconda
