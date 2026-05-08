@@ -23,6 +23,7 @@ requirements:
     - av
     - packaging
     - pillow
+    - pytorch
     - requests
 
 test:
@@ -32,10 +33,12 @@ test:
     - pip check
   requires:
     - pip
+    - pytorch
 
 about:
   home: https://pypi.org/project/qwen-vl-utils/
   license: Apache-2.0
+  license_file: LICENSE
   summary: Qwen Vision Language Model Utils - PyTorch
 
 extra:
